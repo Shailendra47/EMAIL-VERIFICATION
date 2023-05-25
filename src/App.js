@@ -7,9 +7,8 @@ import Stack from '@mui/material/Stack';
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import { Card, CardContent } from "@mui/material";
 
-
-const isEmail = (email) =>
-  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+//REGEX EXPRESSION
+const isEmail = (email) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
  
 export default function App() {
   const [values, setValues] = useState({ email: "" });
@@ -23,32 +22,35 @@ export default function App() {
       errors.email = "Email is not properly written.";
     }
     setErrors(errors);
- 
+    
     if (!Object.keys(errors).length) {
       alert(JSON.stringify(values, null, 2));
     }
   };
  
   const setEmail = (e) => {
-    setValues((values) => ({ ...values, email: e.target.value }));
+    setValues((values) => ({ message: "Thank you ", ...values, email: e.target.value, success: true }));
   };
  
   return (
     <>
-      <div className="container">
+      <div className="container" sx={{}}>
         <Card sx={{ maxWidth: 345 }} className="card-area">
           <CardContent>
             <form onSubmit={validateAndSubmitForm}>
               <h2>EMAIL VALIDATOR </h2>
               <hr/>
-              <Box component="form" sx={{'& .MuiTextField-root': { m: 1, width: '25ch' }, }} noValidate autoComplete="off">
-              <div>
-                <TextField type="text" id="userEmail" label="EMAIL" value={values.email}
-                onChange={setEmail} helperText="abc123@gmail.com" variant="standard"/>{" "}
-              </div>
+              <Box component="form" sx={{'& .MuiTextField-root': { m: 1, width: '25ch' }, marginBottom: 2,  marginTop: 2}} 
+              noValidate autoComplete="off">
+                <div>
+                  <TextField type="text" id="userEmail" label="EMAIL" value={values.email}
+                  onChange={setEmail} helperText="abc123@gmail.com" variant="standard"/>{" "}
+                </div>
               </Box>
-                <Stack direction="row" spacing={2}>
-                <Button type="submit" variant="contained" endIcon={<MarkEmailReadIcon />}> VERIFY </Button>
+                <Stack direction="row" spacing={2} sx={{ marginBottom: 2,  marginTop: 2 }}>
+                <Button type="submit" variant="contained" endIcon={<MarkEmailReadIcon />}> 
+                  VERIFY 
+                </Button>
               </Stack>
               <br />
               {Object.entries(errors).map(([key, error]) => (
@@ -57,8 +59,7 @@ export default function App() {
                     fontWeight: "bold",
                     color: "red"
                   }}
-                >
-                  {key}: {error}
+                >{key}: {error}
                 </span>
               ))}
             </form>
