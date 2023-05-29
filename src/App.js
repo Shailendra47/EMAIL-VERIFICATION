@@ -32,7 +32,7 @@ export default function App() {
     e.preventDefault();
     const errors = {};
 
-    if (!isEmail(values.email)) {errors.email = "Email is not properly written."} setErrors(errors);
+    if (!isEmail(values.email)) {errors.email = "Invalid Credentials"} setErrors(errors);
     
     if (!Object.keys(errors).length) {
       alert(JSON.stringify(values, null, 2));
@@ -40,7 +40,7 @@ export default function App() {
   };
  
   const setEmail = (e) => {
-    setValues((values) => ({ message: "Thank you ", ...values, email: e.target.value, success: true }));
+    setValues((values) => ({ ...values, email: e.target.value, success: true }));
   };
  
   return (
@@ -68,21 +68,19 @@ export default function App() {
                 VERIFY
                 </Button>
                 <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                  <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                    Email Address is Correct.
+                  <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                  {Object.entries(errors).map(([key, error]) => (
+                    <span key={`${key}: ${error}`} 
+                      style={{
+                        fontWeight: "bold",
+                        color: "red"
+                      }}
+                    >{key}: {error}
+                    </span>
+                  ))}
                   </Alert>
                 </Snackbar>
                </Stack> 
-              <br />
-              {Object.entries(errors).map(([key, error]) => (
-                <span key={`${key}: ${error}`} 
-                  style={{
-                    fontWeight: "bold",
-                    color: "red"
-                  }}
-                >{key}: {error}
-                </span>
-              ))}
             </form>
           </CardContent>
       </Card>
